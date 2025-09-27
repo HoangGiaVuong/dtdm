@@ -1,16 +1,41 @@
-
-version: "3"
+version: "3.8"
 
 services:
-  #container nodejs
-  s-node:
-    container_name: node
+  # MySQL Service
+  mysql:
+    image: mysql:8.0
+    container_name: lapcity-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 150577
+      MYSQL_DATABASE: lapcitydb
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: 150577
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  # Node.js Service
+  app:
+    container_name: lapcity-node
     build:
+      context: .
       dockerfile: Dockerfile
-      context: ./nodejs/
-    hostname: nodejs
     ports:
       - "8080:8080"
-    restart: always
+    depends_on:
+      - mysql
+    environment:
+      DB_HOST: mysql
+      DB_USER: root
+      DB_PASSWORD: 150577
+      DB_NAME: lapcitydb
+      DB_PORT: 3306
     volumes:
-      - /home/sowfkun/lapcity/webproject:/home/myweb        #đường dẫn có thể thay đổi để phù họp với các trường hợp khác nhau
+      - .:/usr/src/app
+    restart: always
+
+volumes:
+  mysql-data:
+    driver: local
