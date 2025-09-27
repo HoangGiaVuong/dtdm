@@ -4,7 +4,7 @@ FROM node:latest
 RUN mkdir /home/myweb
 VOLUME /home/hgvuong/dtdm/dtdm/ /home/myweb
 
-ADD init.sh /init.sh
+COPY init.sh /init.sh
 RUN chmod 777 /init.sh
 
 EXPOSE 80 8080
