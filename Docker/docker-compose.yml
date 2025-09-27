@@ -23,8 +23,8 @@ services:
   app:
     container_name: lapcity-node
     build:
-      context: .
-      dockerfile: ./nodejs/Dockerfile
+      context: ./nodejs
+      dockerfile: Dockerfile
     ports:
       - "8080:8080"
     depends_on:

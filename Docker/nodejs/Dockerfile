@@ -1,12 +1,18 @@
-
 FROM node:latest
 
-RUN mkdir /home/myweb
-VOLUME /home/hgvuong/dtdm/dtdm/ /home/myweb
+# Install git
+RUN apt-get update && apt-get install -y git
 
-COPY init.sh /init.sh
-RUN chmod 777 /init.sh
+WORKDIR /home/myweb
 
-EXPOSE 80 8080
-CMD ["/init.sh"]
+# Clone the repository (replace with your actual repo URL)
+RUN git clone https://github.com/HoangGiaVuong/dtdm.git .
 
+# Install dependencies
+RUN npm install
+
+# Expose ports
+EXPOSE 8080
+
+# Start the application
+CMD ["npm", "start"]
