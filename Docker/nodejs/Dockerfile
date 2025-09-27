@@ -11,8 +11,10 @@ RUN git clone https://github.com/HoangGiaVuong/dtdm.git .
 # Install dependencies
 RUN npm install
 
-# Expose ports
+COPY wait-for-it.sh /wait-for-it.sh
+RUN chmod +x /wait-for-it.sh
+
 EXPOSE 8080
 
-# Start the application
-CMD ["npm", "start"]
+# Use wait-for-it before starting the app
+CMD ["/wait-for-it.sh", "mysql:3306", "--", "npm", "start"]
