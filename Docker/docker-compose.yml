@@ -4,6 +4,9 @@ services:
   # MySQL Service
   mysql:
     image: mysql:8.0
+    build:
+      context: .
+      dockerfile: ./mysql/Dockerfile
     container_name: lapcity-mysql
     restart: always
     environment:
@@ -21,7 +24,7 @@ services:
     container_name: lapcity-node
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: ./nodejs/Dockerfile
     ports:
       - "8080:8080"
     depends_on:
